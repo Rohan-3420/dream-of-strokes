@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Panel - Dream of Strokes</title>
+  <link rel="icon" href="images/logo/fevicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-container">
+    <div class="login-box">
+      <div class="login-header">
+        <img src="images/logo/nav.png" alt="Dream of Strokes" class="login-logo">
+        <h1>Admin Panel</h1>
+        <p>Enter password to access dashboard</p>
+      </div>
+      <form id="login-form" class="login-form">
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password-input" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="login-btn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </button>
+        <p id="login-error" class="error-message"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="admin-dashboard" class="dashboard-container" style="display: none;">
+    <header class="dashboard-header">
+      <div class="header-content">
+        <img src="images/logo/nav.png" alt="Dream of Strokes" class="header-logo">
+        <h1>Product Management</h1>
+      </div>
+      <button id="logout-btn" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </header>
+
+    <main class="dashboard-main">
+      <!-- Add Product Section -->
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-plus-circle"></i> Add New Product</h2>
+        </div>
+        <form id="product-form" class="product-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="product-title">Product Title *</label>
+              <input type="text" id="product-title" required placeholder="e.g., Arabic Calligraphy">
+            </div>
+
+            <div class="form-group">
+              <label for="product-artist">Artist Name *</label>
+              <input type="text" id="product-artist" required placeholder="e.g., Rohan Shahzad">
+              <small>Enter artist name (will be added to artist list)</small>
+            </div>
+
+            <div class="form-group">
+              <label for="product-contact">Artist WhatsApp Number *</label>
+              <input type="text" id="product-contact" required placeholder="e.g., 923354581567">
+              <small>Enter number without + or spaces (e.g., 923XXXXXXXXX)</small>
+            </div>
+
+            <div class="form-group">
+              <label for="product-price">Price (PKR) *</label>
+              <input type="text" id="product-price" required placeholder="e.g., 50,000.00">
+            </div>
+
+            <div class="form-group">
+              <label for="product-category">Category *</label>
+              <input type="text" id="product-category" required placeholder="e.g., Calligraphy" list="category-suggestions">
+              <datalist id="category-suggestions">
+                <option value="Calligraphy">
+                <option value="Still Life">
+                <option value="Scenery">
+                <option value="Mosaic">
+              </datalist>
+              <small>Enter or select category (you can add new ones)</small>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="product-image">Image Path *</label>
+              <input type="text" id="product-image" required placeholder="e.g., images/products/painting.jpg">
+              <small>Upload image to images/products/ folder first, then enter path</small>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="product-description">Description *</label>
+              <textarea id="product-description" rows="4" required placeholder="Describe the artwork..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="product-featured">
+                <span>Featured Product</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="product-sold">
+                <span>Mark as Sold</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-plus"></i> Add Product
+            </button>
+            <button type="reset" class="btn btn-secondary">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Reviews Management -->
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-star"></i> Customer Reviews</h2>
+          <p>Manage testimonials displayed on homepage</p>
+        </div>
+        
+        <form id="review-form" class="admin-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="review-name">Customer Name *</label>
+              <input type="text" id="review-name" required placeholder="e.g., Hammad Shahzad">
+            </div>
+
+            <div class="form-group">
+              <label for="review-image">Customer Photo URL *</label>
+              <input type="text" id="review-image" required placeholder="e.g., images/reviews/customer1.jpg">
+              <small>Upload image to images/reviews/ folder first</small>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="review-text">Review Text *</label>
+              <textarea id="review-text" rows="4" required placeholder="Enter customer testimonial..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="review-rating">Rating *</label>
+              <select id="review-rating" required>
+                <option value="">Select Rating</option>
+                <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                <option value="3">⭐⭐⭐ (3 Stars)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="review-featured">
+                <span>Show on Homepage</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary review-submit-btn">
+              <i class="fa-solid fa-plus"></i> Add Review
+            </button>
+            <button type="reset" class="btn btn-secondary">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+        </form>
+
+        <!-- Reviews List -->
+        <div id="reviews-list" class="reviews-list">
+          <!-- Reviews will be loaded here -->
+        </div>
+      </section>
+
+      <!-- Products List -->
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-box"></i> All Products (<span id="product-count">0</span>)</h2>
+        </div>
+        <div id="products-list" class="products-list">
+          <!-- Products will be loaded here -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
+

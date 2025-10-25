@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View beautiful handcrafted paintings by talented Pakistani artists at Dream of Strokes.">
+  <meta name="keywords" content="Pakistani art, handcrafted paintings, buy art online Pakistan">
+  <title>Product Details - Dream of Strokes</title>
+  <link rel="icon" href="images/logo/fevicon.png" type="image/png">
+  <link rel="stylesheet" href="css/paintings.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/header-animations.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header loaded from includes/header.html -->
+  <div id="header-placeholder"></div>
+
+  <main>
+    <!-- Product Loading -->
+    <div id="product-loading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading product...</p>
+    </div>
+
+    <!-- Product Not Found -->
+    <div id="product-not-found" class="not-found-container" style="display: none;">
+      <i class="fa-solid fa-box-open"></i>
+      <h2>Product Not Found</h2>
+      <p>Sorry, we couldn't find the product you're looking for.</p>
+      <a href="artwork.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Gallery
+      </a>
+    </div>
+
+    <!-- Product Section -->
+    <section id="product-section" class="artwork-section" style="display: none;">
+      <div class="artwork-container">
+        <div class="artwork-image-wrapper">
+          <span id="product-category-badge" class="category-badge"></span>
+          <img id="product-image" src="" alt="" class="artwork-image">
+          <div class="image-zoom-hint">
+            <i class="fa-solid fa-search-plus"></i> Click to enlarge
+          </div>
+        </div>
+
+        <div class="artwork-details">
+          <div class="product-header">
+            <span id="product-artist-name" class="artist-tag"></span>
+            <span id="product-featured-badge" class="featured-tag" style="display: none;">
+              <i class="fa-solid fa-star"></i> Featured
+            </span>
+          </div>
+          
+          <h1 id="product-title" class="product-title"></h1>
+          
+          <div class="price-section">
+            <span class="price-label">Price</span>
+            <p id="product-price" class="product-price"></p>
+          </div>
+
+          <a id="whatsapp-link" href="#" class="whatsapp-cta" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>Order via WhatsApp</span>
+          </a>
+
+          <div class="product-description">
+            <h3><i class="fa-solid fa-info-circle"></i> About This Artwork</h3>
+            <p id="product-description"></p>
+          </div>
+
+          <div class="product-features">
+            <div class="feature-item">
+              <i class="fa-solid fa-paintbrush"></i>
+              <span>Handcrafted</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-certificate"></i>
+              <span>Original Art</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-truck"></i>
+              <span>Nationwide Delivery</span>
+            </div>
+          </div>
+
+          <div class="share-section">
+            <p><i class="fa-solid fa-share-nodes"></i> Share this artwork:</p>
+            <div class="share-buttons">
+              <a href="#" id="share-whatsapp" class="share-btn whatsapp-share" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+              <a href="#" id="share-facebook" class="share-btn facebook-share" target="_blank">
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+              <a href="#" id="share-twitter" class="share-btn twitter-share" target="_blank">
+                <i class="fa-brands fa-twitter"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Products -->
+    <section id="related-products" class="related-section" style="display: none;">
+      <h2>More From Our Collection</h2>
+      <div id="related-products-grid" class="related-grid"></div>
+    </section>
+  </main>
+
+  <!-- Footer loaded from includes/footer.html -->
+  <div id="footer-placeholder"></div>
+
+  <script src="js/components.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>
+
