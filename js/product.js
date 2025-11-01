@@ -45,9 +45,13 @@ async function loadProduct() {
 // Gallery state
 let currentImageIndex = 0;
 let productImages = [];
+let currentProduct = null;
+let countdownInterval = null;
 
 // Display product
 function displayProduct(product) {
+  currentProduct = product;
+  
   // Hide loading, show product
   document.getElementById('product-loading').style.display = 'none';
   document.getElementById('product-section').style.display = 'block';
@@ -62,7 +66,6 @@ function displayProduct(product) {
   // Update product details
   document.getElementById('product-title').textContent = product.title;
   document.getElementById('product-artist-name').textContent = product.artist;
-  document.getElementById('product-price').textContent = `Rs. ${product.price} PKR`;
   document.getElementById('product-description').textContent = product.description;
   document.getElementById('product-category-badge').textContent = product.category;
   
@@ -71,13 +74,18 @@ function displayProduct(product) {
     document.getElementById('product-featured-badge').style.display = 'inline-flex';
   }
   
+  // Display price or bidding section
+  if (product.biddingEnabled) {
+    displayBiddingSection(product);
+  } else {
+    displayPriceSection(product);
+  }
+  
   // Setup image gallery
   setupImageGallery();
   
   // WhatsApp link
-  const whatsappMsg = encodeURIComponent(`Hi! I'm interested in the "${product.title}" painting. Can you provide more details?`);
-  const whatsappLink = `https://wa.me/${product.artistContact}?text=${whatsappMsg}`;
-  document.getElementById('whatsapp-link').href = whatsappLink;
+  updateWhatsAppLink(product);
   
   // Share links
   const pageUrl = encodeURIComponent(window.location.href);
@@ -90,6 +98,219 @@ function displayProduct(product) {
   // Image zoom
   document.getElementById('product-image').addEventListener('click', function() {
     window.open(this.src, '_blank');
+  });
+}
+
+// Display fixed price section
+function displayPriceSection(product) {
+  document.getElementById('price-section').style.display = 'block';
+  document.getElementById('bidding-section').style.display = 'none';
+  document.getElementById('product-price').textContent = `Rs. ${product.price} PKR`;
+}
+
+// Display bidding section
+function displayBiddingSection(product) {
+  document.getElementById('price-section').style.display = 'none';
+  document.getElementById('bidding-section').style.display = 'block';
+  
+  // Set minimum bid
+  const minBid = product.currentBid 
+    ? parseFloat(product.currentBid) + parseFloat(product.bidIncrement || 500)
+    : parseFloat(product.startingBid || 5000);
+  
+  // Update current bid display
+  const currentBidAmount = product.currentBid || product.startingBid || 5000;
+  document.getElementById('current-bid-amount').textContent = `Rs. ${parseFloat(currentBidAmount).toLocaleString()} PKR`;
+  
+  // Set minimum bid in form
+  document.getElementById('bid-amount').min = minBid;
+  document.getElementById('min-bid-text').textContent = `Minimum bid: Rs. ${minBid.toLocaleString()}`;
+  
+  // Setup countdown timer if end date exists
+  if (product.bidEndDate) {
+    setupCountdownTimer(product.bidEndDate);
+  }
+  
+  // Load and display bids
+  loadBids(product.id);
+  
+  // Setup bid form
+  setupBidForm(product);
+}
+
+// Setup countdown timer
+function setupCountdownTimer(endDate) {
+  const timerElement = document.getElementById('bid-timer');
+  const timeRemainingElement = document.getElementById('time-remaining');
+  
+  timerElement.style.display = 'flex';
+  
+  // Clear existing interval
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
+  
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const end = new Date(endDate).getTime();
+    const distance = end - now;
+    
+    if (distance < 0) {
+      clearInterval(countdownInterval);
+      timeRemainingElement.textContent = 'Auction Ended';
+      document.getElementById('bid-form').style.display = 'none';
+      return;
+    }
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    let timeText = '';
+    if (days > 0) timeText += `${days}d `;
+    timeText += `${hours}h ${minutes}m ${seconds}s`;
+    
+    timeRemainingElement.textContent = timeText;
+  }
+  
+  updateCountdown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+// Update WhatsApp link based on bidding or fixed price
+function updateWhatsAppLink(product) {
+  const whatsappLink = document.getElementById('whatsapp-link');
+  const whatsappText = document.getElementById('whatsapp-text');
+  
+  let message;
+  if (product.biddingEnabled) {
+    message = encodeURIComponent(`Hi! I'm interested in bidding on "${product.title}". Can you provide more details?`);
+    whatsappText.textContent = 'Contact About Bidding';
+  } else {
+    message = encodeURIComponent(`Hi! I'm interested in the "${product.title}" painting. Can you provide more details?`);
+    whatsappText.textContent = 'Order via WhatsApp';
+  }
+  
+  whatsappLink.href = `https://wa.me/${product.artistContact}?text=${message}`;
+}
+
+// Load bids for a product
+async function loadBids(productId) {
+  try {
+    const response = await fetch(`/api/get-bids?productId=${productId}`);
+    const data = await response.json();
+    
+    if (data.success && data.bids && data.bids.length > 0) {
+      const bidCount = document.getElementById('bid-count');
+      bidCount.textContent = `${data.bids.length} bid${data.bids.length > 1 ? 's' : ''} placed`;
+      
+      // Display bid history (top 5)
+      displayBidHistory(data.bids.slice(0, 5));
+    }
+  } catch (error) {
+    console.error('Error loading bids:', error);
+  }
+}
+
+// Display bid history
+function displayBidHistory(bids) {
+  const historyContainer = document.getElementById('bid-history');
+  const historyList = document.getElementById('bid-history-list');
+  
+  if (bids.length === 0) {
+    return;
+  }
+  
+  historyContainer.style.display = 'block';
+  
+  historyList.innerHTML = bids.map((bid, index) => `
+    <div class="bid-item ${index === 0 ? 'highest-bid' : ''}">
+      <div class="bid-item-header">
+        <span class="bidder-name">
+          ${index === 0 ? '<i class="fa-solid fa-crown"></i>' : '<i class="fa-solid fa-user"></i>'}
+          ${bid.bidder_name}
+        </span>
+        <span class="bid-item-amount">Rs. ${parseFloat(bid.bid_amount).toLocaleString()}</span>
+      </div>
+      <span class="bid-item-time">${formatTimeAgo(bid.created_at)}</span>
+    </div>
+  `).join('');
+}
+
+// Format time ago
+function formatTimeAgo(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  
+  if (seconds < 60) return 'Just now';
+  if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+  return `${Math.floor(seconds / 86400)} days ago`;
+}
+
+// Setup bid form
+function setupBidForm(product) {
+  const form = document.getElementById('bid-form');
+  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const bidderName = document.getElementById('bidder-name').value.trim();
+    const bidderContact = document.getElementById('bidder-contact').value.trim();
+    const bidAmount = parseFloat(document.getElementById('bid-amount').value);
+    
+    // Validate contact number
+    if (!/^92\d{10}$/.test(bidderContact)) {
+      alert('⚠️ Please enter a valid WhatsApp number in format: 923XXXXXXXXX');
+      return;
+    }
+    
+    // Disable submit button
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Placing Bid...';
+    
+    try {
+      const response = await fetch('/api/place-bid', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          bidderName,
+          bidderContact,
+          bidAmount
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('🎉 Bid placed successfully! We will contact you if you win the auction.');
+        
+        // Reload product to update current bid
+        const products = await getProducts();
+        const updatedProduct = products.find(p => p.id == product.id);
+        if (updatedProduct) {
+          displayBiddingSection(updatedProduct);
+          currentProduct = updatedProduct;
+        }
+        
+        // Reset form
+        form.reset();
+      } else {
+        alert('⚠️ ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error placing bid:', error);
+      alert('⚠️ Failed to place bid. Please try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fa-solid fa-gavel"></i> Place Bid';
+    }
   });
 }
 

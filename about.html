@@ -24,11 +24,22 @@
   <link rel="icon" href="images/logo/fevicon.png" type="image/png">
   <link rel="canonical" href="https://dreamofstrokes.com/about.html">
   
+  <!-- Performance: Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Critical CSS -->
   <link rel="stylesheet" href="css/about.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/header-animations.css">
+  
+  <!-- Fonts with display=swap -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Non-critical CSS - preload then apply -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 </head>
 <body>
   <!-- Header loaded from includes/header.html -->

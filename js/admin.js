@@ -131,10 +131,17 @@ function displayProducts(products) {
     return;
   }
   
-  container.innerHTML = products.map(product => `
+  container.innerHTML = products.map(product => {
+    const priceDisplay = product.biddingEnabled 
+      ? `<div class="auction-badge"><i class="fa-solid fa-gavel"></i> AUCTION</div>
+         <p class="product-card-price">Current Bid: Rs. ${product.currentBid ? parseFloat(product.currentBid).toLocaleString() : parseFloat(product.startingBid || 5000).toLocaleString()}</p>`
+      : `<p class="product-card-price">Rs. ${product.price}</p>`;
+    
+    return `
     <div class="product-card" style="position: relative;">
       ${product.featured ? '<div class="featured-badge"><i class="fa-solid fa-star"></i> Featured</div>' : ''}
       ${product.sold ? '<div class="sold-badge-admin"><i class="fa-solid fa-circle-check"></i> SOLD</div>' : ''}
+      ${product.biddingEnabled && !product.sold ? '<div class="bidding-badge"><i class="fa-solid fa-gavel"></i> Live Auction</div>' : ''}
       <img src="${product.image}" alt="${product.title}" class="product-card-image" onerror="this.src='images/logo/nav.png'">
       <div class="product-card-content">
         <div class="product-card-header">
@@ -142,12 +149,15 @@ function displayProducts(products) {
             <h3 class="product-card-title">${product.title}</h3>
             <p class="product-card-artist">${product.artist}</p>
           </div>
-          <p class="product-card-price">Rs. ${product.price}</p>
+          ${priceDisplay}
         </div>
         <span class="product-card-category">${product.category}</span>
         ${product.sold ? '<span class="product-status sold">✅ SOLD</span>' : '<span class="product-status available">🟢 Available</span>'}
         <p class="product-card-description">${product.description}</p>
         <div class="product-card-actions">
+          ${product.biddingEnabled ? `<button onclick="viewBids(${product.id})" class="btn btn-info btn-small">
+            <i class="fa-solid fa-list"></i> View Bids
+          </button>` : ''}
           <button onclick="editProduct(${product.id})" class="btn btn-primary btn-small">
             <i class="fa-solid fa-edit"></i> Edit
           </button>
@@ -160,15 +170,24 @@ function displayProducts(products) {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 // Track edit mode
 let editingProductId = null;
 
+// Toggle bidding options visibility
+document.getElementById('product-bidding').addEventListener('change', function() {
+  const biddingOptions = document.getElementById('bidding-options');
+  biddingOptions.style.display = this.checked ? 'grid' : 'none';
+});
+
 // Add or Update product
 document.getElementById('product-form').addEventListener('submit', async function(e) {
   e.preventDefault();
+  
+  const biddingEnabled = document.getElementById('product-bidding').checked;
   
   const productData = {
     id: editingProductId || Date.now(),
@@ -180,7 +199,11 @@ document.getElementById('product-form').addEventListener('submit', async functio
     image: document.getElementById('product-image').value,
     description: document.getElementById('product-description').value,
     featured: document.getElementById('product-featured').checked,
-    sold: document.getElementById('product-sold').checked
+    sold: document.getElementById('product-sold').checked,
+    biddingEnabled: biddingEnabled,
+    startingBid: biddingEnabled ? document.getElementById('product-starting-bid').value : 5000,
+    bidIncrement: biddingEnabled ? document.getElementById('product-bid-increment').value : 500,
+    bidEndDate: biddingEnabled ? document.getElementById('product-bid-end-date').value || null : null
   };
   
   let isEditing = editingProductId !== null;
@@ -203,6 +226,9 @@ document.getElementById('product-form').addEventListener('submit', async functio
     
     displayProducts(products);
     this.reset();
+    
+    // Hide bidding options on reset
+    document.getElementById('bidding-options').style.display = 'none';
     
     // Scroll to products list
     document.getElementById('products-list').scrollIntoView({ behavior: 'smooth' });
@@ -233,6 +259,21 @@ async function editProduct(id) {
   document.getElementById('product-description').value = product.description;
   document.getElementById('product-featured').checked = product.featured || false;
   document.getElementById('product-sold').checked = product.sold || false;
+  
+  // Populate bidding fields
+  const biddingEnabled = product.biddingEnabled || false;
+  document.getElementById('product-bidding').checked = biddingEnabled;
+  if (biddingEnabled) {
+    document.getElementById('bidding-options').style.display = 'grid';
+    document.getElementById('product-starting-bid').value = product.startingBid || 5000;
+    document.getElementById('product-bid-increment').value = product.bidIncrement || 500;
+    if (product.bidEndDate) {
+      // Convert to local datetime format for input
+      const date = new Date(product.bidEndDate);
+      const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      document.getElementById('product-bid-end-date').value = localDate.toISOString().slice(0, 16);
+    }
+  }
   
   // Show image previews if product has images
   if (product.image) {
@@ -286,6 +327,47 @@ async function deleteProduct(id) {
 // View product
 function viewProduct(id) {
   window.open(`product.html?id=${id}`, '_blank');
+}
+
+// View bids for a product
+async function viewBids(productId) {
+  try {
+    const response = await fetch(`/api/get-bids?productId=${productId}`);
+    const data = await response.json();
+    
+    if (!data.success) {
+      alert('⚠️ Failed to load bids');
+      return;
+    }
+    
+    const bids = data.bids || [];
+    const products = await getProducts();
+    const product = products.find(p => p.id === productId);
+    
+    if (bids.length === 0) {
+      alert(`ℹ️ No bids placed yet for "${product.title}"`);
+      return;
+    }
+    
+    // Create a modal-like display
+    let bidsList = `📊 BIDS FOR: ${product.title}\n\n`;
+    bidsList += `Current Highest Bid: Rs. ${parseFloat(product.currentBid || product.startingBid).toLocaleString()}\n`;
+    bidsList += `Total Bids: ${bids.length}\n\n`;
+    bidsList += `=================================\n\n`;
+    
+    bids.forEach((bid, index) => {
+      bidsList += `${index + 1}. ${bid.bidder_name}\n`;
+      bidsList += `   Amount: Rs. ${parseFloat(bid.bid_amount).toLocaleString()}\n`;
+      bidsList += `   Contact: ${bid.bidder_contact}\n`;
+      bidsList += `   Status: ${bid.status === 'active' ? '🏆 WINNING' : '⚪ Outbid'}\n`;
+      bidsList += `   Time: ${new Date(bid.created_at).toLocaleString()}\n\n`;
+    });
+    
+    alert(bidsList);
+  } catch (error) {
+    console.error('Error viewing bids:', error);
+    alert('⚠️ Failed to load bids');
+  }
 }
 
 

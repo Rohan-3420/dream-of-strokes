@@ -45,6 +45,10 @@ export default async function handler(req, res) {
           description: product.description,
           featured: product.featured || false,
           sold: product.sold || false,
+          bidding_enabled: product.biddingEnabled || false,
+          starting_bid: product.startingBid || 5000,
+          bid_increment: product.bidIncrement || 500,
+          bid_end_date: product.bidEndDate || null,
           updated_at: new Date().toISOString()
         })
         .select();
@@ -82,6 +86,10 @@ export default async function handler(req, res) {
         description: p.description,
         featured: p.featured || false,
         sold: p.sold || false,
+        bidding_enabled: p.biddingEnabled || false,
+        starting_bid: p.startingBid || 5000,
+        bid_increment: p.bidIncrement || 500,
+        bid_end_date: p.bidEndDate || null,
         updated_at: new Date().toISOString()
       }));
       

@@ -1,4 +1,4 @@
-// Vercel Serverless Function to get products from Supabase
+// Vercel Serverless Function to get bids for a product
 import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req, res) {
@@ -27,44 +27,37 @@ export default async function handler(req, res) {
   );
   
   try {
-    // Get all products
-    const { data, error } = await supabase
-      .from('products')
+    const { productId } = req.query;
+    
+    if (!productId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Product ID is required' 
+      });
+    }
+    
+    // Get all bids for the product, ordered by amount (highest first)
+    const { data: bids, error } = await supabase
+      .from('bids')
       .select('*')
+      .eq('product_id', productId)
+      .order('bid_amount', { ascending: false })
       .order('created_at', { ascending: false });
     
     if (error) {
       throw error;
     }
     
-    // Transform data to match frontend format
-    const products = data.map(p => ({
-      id: p.id,
-      title: p.title,
-      artist: p.artist,
-      artistContact: p.artist_contact,
-      price: p.price,
-      category: p.category,
-      image: p.image,
-      description: p.description,
-      featured: p.featured,
-      sold: p.sold,
-      biddingEnabled: p.bidding_enabled,
-      startingBid: p.starting_bid,
-      currentBid: p.current_bid,
-      bidIncrement: p.bid_increment,
-      bidEndDate: p.bid_end_date
-    }));
-    
     return res.status(200).json({
-      products: products
+      success: true,
+      bids: bids || []
     });
     
   } catch (error) {
-    console.error('Error loading products:', error);
+    console.error('Error getting bids:', error);
     return res.status(500).json({
       success: false,
-      message: error.message || 'Failed to load products'
+      message: error.message || 'Failed to get bids'
     });
   }
 }

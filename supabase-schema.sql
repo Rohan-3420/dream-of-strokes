@@ -13,6 +13,11 @@ CREATE TABLE IF NOT EXISTS products (
   description TEXT NOT NULL,
   featured BOOLEAN DEFAULT FALSE,
   sold BOOLEAN DEFAULT FALSE,
+  bidding_enabled BOOLEAN DEFAULT FALSE,
+  starting_bid NUMERIC DEFAULT 5000,
+  current_bid NUMERIC DEFAULT NULL,
+  bid_increment NUMERIC DEFAULT 500,
+  bid_end_date TIMESTAMP WITH TIME ZONE DEFAULT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
@@ -29,8 +34,32 @@ CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
 -- Create index on artist for filtering
 CREATE INDEX IF NOT EXISTS idx_products_artist ON products(artist);
 
+-- Create index on bidding enabled products
+CREATE INDEX IF NOT EXISTS idx_products_bidding ON products(bidding_enabled);
+
+-- Create bids table
+CREATE TABLE IF NOT EXISTS bids (
+  id BIGSERIAL PRIMARY KEY,
+  product_id BIGINT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  bidder_name TEXT NOT NULL,
+  bidder_contact TEXT NOT NULL,
+  bid_amount NUMERIC NOT NULL,
+  status TEXT DEFAULT 'active', -- active, outbid, won, cancelled
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+);
+
+-- Create index on product_id for faster bid lookups
+CREATE INDEX IF NOT EXISTS idx_bids_product_id ON bids(product_id);
+
+-- Create index on bid_amount for sorting
+CREATE INDEX IF NOT EXISTS idx_bids_amount ON bids(bid_amount DESC);
+
+-- Create index on status for filtering
+CREATE INDEX IF NOT EXISTS idx_bids_status ON bids(status);
+
 -- Enable Row Level Security (RLS)
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE bids ENABLE ROW LEVEL SECURITY;
 
 -- Create policy to allow public read access
 CREATE POLICY "Allow public read access" ON products
@@ -40,6 +69,20 @@ CREATE POLICY "Allow public read access" ON products
 -- Create policy to allow authenticated insert/update/delete
 -- For now, we'll allow all operations (you can restrict this later)
 CREATE POLICY "Allow all operations" ON products
+  FOR ALL
+  USING (true)
+  WITH CHECK (true);
+
+-- Create policies for bids table
+CREATE POLICY "Allow public read access to bids" ON bids
+  FOR SELECT
+  USING (true);
+
+CREATE POLICY "Allow public insert to bids" ON bids
+  FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Allow all operations on bids" ON bids
   FOR ALL
   USING (true)
   WITH CHECK (true);

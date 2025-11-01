@@ -24,10 +24,21 @@
   <link rel="icon" href="images/logo/fevicon.png" type="image/png">
   <link rel="canonical" href="https://dreamofstrokes.com">
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Performance: Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Critical CSS - loaded synchronously -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/header-animations.css">
+  
+  <!-- Non-critical CSS - preload then apply -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+  
+  <!-- Fonts with display=swap for better perceived performance -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <!-- Structured Data for Organization -->
   <script type="application/ld+json">
@@ -185,8 +196,9 @@
   <!-- Footer loaded from includes/footer.html -->
   <div id="footer-placeholder"></div>
 
-  <script src="js/components.js"></script>
-  <script src="js/script.js"></script>
-  <script src="js/gallery.js"></script>
+  <!-- Deferred JavaScript for better performance -->
+  <script src="js/components.js" defer></script>
+  <script src="js/script.js" defer></script>
+  <script src="js/gallery.js" defer></script>
 </body>
 </html>

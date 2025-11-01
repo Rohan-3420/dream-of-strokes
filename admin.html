@@ -120,6 +120,33 @@
                 <span>Mark as Sold</span>
               </label>
             </div>
+
+            <div class="form-group full-width">
+              <label class="checkbox-label">
+                <input type="checkbox" id="product-bidding">
+                <span><i class="fa-solid fa-gavel"></i> Enable Bidding (Auction)</span>
+              </label>
+            </div>
+
+            <div id="bidding-options" class="bidding-options" style="display: none;">
+              <div class="form-group">
+                <label for="product-starting-bid">Starting Bid (PKR)</label>
+                <input type="number" id="product-starting-bid" placeholder="5000" min="1000" step="100" value="5000">
+                <small>Minimum starting bid amount</small>
+              </div>
+
+              <div class="form-group">
+                <label for="product-bid-increment">Bid Increment (PKR)</label>
+                <input type="number" id="product-bid-increment" placeholder="500" min="100" step="100" value="500">
+                <small>Minimum amount by which each bid must increase</small>
+              </div>
+
+              <div class="form-group">
+                <label for="product-bid-end-date">Auction End Date (Optional)</label>
+                <input type="datetime-local" id="product-bid-end-date">
+                <small>Leave empty for no time limit</small>
+              </div>
+            </div>
           </div>
 
           <div class="form-actions">

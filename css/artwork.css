@@ -520,6 +520,58 @@
   margin: 0;
 }
 
+/* Auction-specific styles */
+.card-price-label {
+  font-size: 0.8rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.auction-price {
+  color: #ffd700 !important;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.auction-badge-card {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(255, 140, 0, 0.95) 100%) !important;
+  top: 50px !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.auction-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 14px;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
 /* Spin animation for loader */
 @keyframes spin {
   0% { transform: rotate(0deg); }

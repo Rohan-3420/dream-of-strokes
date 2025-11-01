@@ -40,6 +40,18 @@ async function loadGallery(filterCategory = 'all', filterArtist = 'all') {
     // Get first image if multiple images are comma-separated
     const firstImage = product.image.split(',')[0].trim();
     
+    // Determine price display based on bidding status
+    let priceDisplay;
+    if (product.biddingEnabled) {
+      const bidAmount = product.currentBid || product.startingBid || 5000;
+      priceDisplay = `
+        <p class="card-price-label">${product.currentBid ? 'Current Bid' : 'Starting Bid'}</p>
+        <p class="card-price auction-price">Rs. ${parseFloat(bidAmount).toLocaleString()}</p>
+      `;
+    } else {
+      priceDisplay = `<p class="card-price">Rs. ${product.price}</p>`;
+    }
+    
     return `
     <article class="art-card" 
              data-category="${product.category.toLowerCase().replace(/\s+/g, '-')}" 
@@ -48,12 +60,13 @@ async function loadGallery(filterCategory = 'all', filterArtist = 'all') {
         <div class="card-image">
           <img src="${firstImage}" alt="${product.title}" loading="lazy">
           ${product.featured ? '<span class="card-badge">Featured</span>' : ''}
+          ${product.biddingEnabled ? '<span class="card-badge auction-badge-card"><i class="fa-solid fa-gavel"></i> Auction</span>' : ''}
         </div>
         <div class="card-info">
           <span class="card-category">${product.category}</span>
           <h3>${product.title}</h3>
           <p class="card-artist">${product.artist}</p>
-          <p class="card-price">Rs. ${product.price}</p>
+          ${priceDisplay}
         </div>
       </a>
     </article>
@@ -158,12 +171,22 @@ async function loadFeaturedProducts() {
     // Get first image if multiple images are comma-separated
     const firstImage = product.image.split(',')[0].trim();
     
+    // Determine price display based on bidding status
+    let priceDisplay;
+    if (product.biddingEnabled) {
+      const bidAmount = product.currentBid || product.startingBid || 5000;
+      priceDisplay = `<strong>${product.currentBid ? 'Current Bid: ' : 'Starting Bid: '}Rs. ${parseFloat(bidAmount).toLocaleString()}</strong><br>PKR`;
+    } else {
+      priceDisplay = `<strong>Rs. ${product.price}</strong><br>PKR`;
+    }
+    
     return `
     <div class="art-card">
       <a href="product.html?id=${product.id}">
         <img src="${firstImage}" alt="${product.title}" loading="lazy">
+        ${product.biddingEnabled ? '<span class="auction-indicator"><i class="fa-solid fa-gavel"></i></span>' : ''}
         <h3>${product.title}</h3>
-        <p><strong>Rs. ${product.price}</strong><br>PKR</p>
+        <p>${priceDisplay}</p>
       </a>
     </div>
   `;
