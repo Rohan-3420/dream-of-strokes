@@ -1,204 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Dream of Strokes - Handcrafted paintings by talented Pakistani artists. Explore beautiful calligraphy, still life, scenery, and mosaic artwork. Shop original art pieces from Rohan Shahzad, Ahmad Abbas, Fasih-ur-Rehman, and Talha Abuzar.">
-  <meta name="keywords" content="Pakistani art, handcrafted paintings, calligraphy art, still life paintings, mosaic art, dream of strokes, Rohan Shahzad artist, Pakistani artists">
-  <meta name="author" content="Dream of Strokes">
-  
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Dream of Strokes - Handcrafted Pakistani Art">
-  <meta property="og:description" content="Explore beautiful handcrafted paintings by talented Pakistani artists. Original calligraphy, still life, scenery, and mosaic artwork.">
-  <meta property="og:image" content="images/logo/nav.png">
-  <meta property="og:url" content="https://dreamofstrokes.com">
-  <meta property="og:type" content="website">
-  
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Dream of Strokes - Handcrafted Pakistani Art">
-  <meta name="twitter:description" content="Explore beautiful handcrafted paintings by talented Pakistani artists.">
-  <meta name="twitter:image" content="images/logo/nav.png">
-  
-  <title>Dream of Strokes - Handcrafted Paintings by Pakistani Artists</title>
-  <link rel="icon" href="images/logo/fevicon.png" type="image/png">
-  <link rel="canonical" href="https://dreamofstrokes.com">
-  
-  <!-- Performance: Preconnect to external domains -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  
-  <!-- Critical CSS - loaded synchronously -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/header-animations.css">
-  
-  <!-- Non-critical CSS - preload then apply -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
-  
-  <!-- Fonts with display=swap for better perceived performance -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Structured Data for Organization -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Dream of Strokes",
-    "description": "Handcrafted paintings by talented Pakistani artists",
-    "url": "https://dreamofstrokes.com",
-    "logo": "images/logo/nav.png",
-    "sameAs": [
-      "https://www.instagram.com/dream_of_strokes",
-      "https://www.facebook.com/share/1Fi6vQ2dS7/",
-      "https://www.tiktok.com/@dream.of.strokes"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+92-335-4581567",
-      "contactType": "Customer Service",
-      "availableLanguage": ["English", "Urdu"]
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dream of Strokes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
     }
-  }
-  </script>
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+      background: linear-gradient(120deg, #0b0b15, #0f0f25);
+    }
+
+    /* Moving blue → pink gradient lights */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(0,150,255,0.3), transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255,20,147,0.3), transparent 50%),
+        radial-gradient(circle at 60% 30%, rgba(0,200,255,0.2), transparent 60%);
+      animation: moveGradient 18s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes moveGradient {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(10%, -10%) scale(1.2); }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 2;
+      position: relative;
+      padding: 50px 40px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(25px);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+      animation: fadeIn 2s ease-out;
+    }
+
+    .brand {
+      font-size: 3.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #00bfff, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.2rem;
+      animation: glowText 3s infinite ease-in-out;
+    }
+
+    @keyframes glowText {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+      50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.4); }
+    }
+
+    .tagline {
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: #d6d6d6;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 2s ease;
+    }
+
+    /* Modern glowing button */
+    .btn {
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+      padding: 15px 55px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #fff;
+      background: linear-gradient(90deg, #00bfff33, #ff149333);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75px;
+      width: 50px;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+      transition: 0.7s;
+    }
+
+    .btn:hover::before {
+      left: 125%;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #00bfff55, #ff149355);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.15;
+      animation: floatParticle 12s infinite linear;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .brand { font-size: 2.6rem; }
+      .tagline { font-size: 1.1rem; }
+      .btn { padding: 12px 40px; font-size: 0.95rem; }
+    }
+  </style>
 </head>
 <body>
+  <!-- Floating glowing particles -->
+  <div class="particle" style="left: 15%; animation-delay: 0s;"></div>
+  <div class="particle" style="left: 35%; animation-delay: 2s;"></div>
+  <div class="particle" style="left: 55%; animation-delay: 4s;"></div>
+  <div class="particle" style="left: 75%; animation-delay: 6s;"></div>
 
-  <!-- Header loaded from includes/header.html -->
-  <div id="header-placeholder"></div>
-
-  <main>
-    <section class="hero" role="banner">
-      <div class="hero-content">
-        <h1 class="hero-title">DREAM OF STROKES</h1>
-        <p class="hero-tagline">Where Artistry Meets Magic</p>
-        <p class="hero-subtitle">4 Talented Artists  •  1 Shared Vision  •  Endless Masterpieces</p>
-        <div class="hero-buttons">
-          <a href="artwork.html" class="hero-btn primary" aria-label="Explore our art gallery">Explore Gallery</a>
-          <a href="contact.html" class="hero-btn secondary" aria-label="Contact our artists">Contact Artists</a>
-        </div>
-      </div>
-    </section>
- 
-    <section class="categories" aria-labelledby="categories-heading">
-      <div class="categories-content">
-        <span class="section-label" aria-hidden="true">Our Collections</span>
-        <h2 id="categories-heading">Discover Art Categories</h2>
-        <p class="para">Explore a vibrant collection of artistic styles that captivate hearts and inspire imaginations</p>
-      </div>
-      
-      <div class="gallery-container">
-        <div class="gallery-item">
-          <div class="gallery-image">
-            <img src="images/products/ahmad s2.png" alt="Still life painting featuring vibrant fruits and everyday objects with dramatic lighting" loading="lazy">
-            <div class="gallery-overlay">
-              <a href="artwork.html#still-life" class="view-link" aria-label="View still life art collection">View Collection</a>
-            </div>
-          </div>
-          <div class="gallery-info">
-            <h3>Still Life</h3>
-            <p>Vibrant compositions capturing everyday beauty through light and color</p>
-          </div>
-        </div>
-        
-        <div class="gallery-item">
-          <div class="gallery-image">
-            <img src="images/products/rohan c3.png" alt="Beautiful Arabic calligraphy artwork with intricate Islamic patterns" loading="lazy">
-            <div class="gallery-overlay">
-              <a href="artwork.html#calligraphy" class="view-link" aria-label="View calligraphy art collection">View Collection</a>
-            </div>
-          </div>
-          <div class="gallery-info">
-            <h3>Calligraphy</h3>
-            <p>Elegant Arabic calligraphy symbolizing peace, faith, and artistic beauty</p>
-          </div>
-        </div>
-        
-        <div class="gallery-item">
-          <div class="gallery-image">
-            <img src="images/products/talha m2.png" alt="Detailed mosaic artwork with colorful patterns and natural scenery" loading="lazy">
-            <div class="gallery-overlay">
-              <a href="artwork.html#mosaic" class="view-link" aria-label="View mosaic art collection">View Collection</a>
-            </div>
-          </div>
-          <div class="gallery-info">
-            <h3>Mosaic</h3>
-            <p>Intricate techniques evoking serenity and boundless imagination</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="about" aria-labelledby="about-heading">
-      <div class="about-container">
-        <div class="about-image">
-          <img src="images/background/comment.jpg" alt="Young Pakistani artist Rohan Shahzad creating detailed paintings in his studio" loading="lazy">
-        </div>
-        <div class="about-content">
-          <span class="section-label" aria-hidden="true">Our Story</span>
-          <h2 id="about-heading">Meet the Artists</h2>
-          <p>
-            Led by Rohan Shahzad, a 16-year-old artist from Pakistan who began painting in 2021. Despite his young age, he has created over 300 unique, handmade paintings and won 2nd place in the Junior Artist competition in Pakistan (2022).
-          </p>
-          <p>
-            Together with three other talented artists, Dream of Strokes brings you authentic, handcrafted artwork that tells a story and captures emotion in every brushstroke.
-          </p>
-          <a href="about.html" class="learn-btn">Meet All Artists</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="artshow-section" aria-labelledby="featured-heading">
-      <div class="artshow-header">
-        <span class="section-label" aria-hidden="true">Shop</span>
-        <h2 class="artshow-title" id="featured-heading">Featured Paintings</h2>
-        <p class="artshow-subtitle">Handpicked masterpieces from our talented artists</p>
-      </div>
-    
-      <div class="artshow-wrapper">
-        <button class="arrow-btn arrow-left" id="artshow-scroll-left" type="button" aria-label="Scroll paintings left">
-          <span aria-hidden="true">&#10094;</span>
-        </button>
-    
-        <div class="artshow-gallery" id="featured-products" role="region" aria-label="Featured paintings carousel">
-          <!-- Featured products will be loaded dynamically by gallery.js -->
-        </div>
-    
-        <button class="arrow-btn arrow-right" id="artshow-scroll-right" type="button" aria-label="Scroll paintings right">
-          <span aria-hidden="true">&#10095;</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Sold Gallery Section -->
-    <section class="sold-section" aria-labelledby="sold-heading">
-      <div class="sold-header">
-        <h2 id="sold-heading">Our Sold Gallery</h2>
-        <p>Discover the masterpieces that found their perfect homes</p>
-      </div>
-      <div class="sold-gallery" id="sold-products">
-        <!-- Sold products will be loaded dynamically by gallery.js -->
-      </div>
-    </section>
-
-    <!-- CTA Section - Always visible -->
-    <section class="cta-section">
-      <div class="sold-cta">
-        <p>Want to own your own masterpiece?</p>
-        <a href="artwork.html" class="explore-btn">Explore Available Art</a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer loaded from includes/footer.html -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Deferred JavaScript for better performance -->
-  <script src="js/components.js" defer></script>
-  <script src="js/script.js" defer></script>
-  <script src="js/gallery.js" defer></script>
+  <div class="container">
+    <h1 class="brand">Dream of Strokes</h1>
+    <p class="tagline">Where every brush tells a story.</p>
+    <a href="https://www.dreamofstrokes.com" class="btn">Enter the Gallery</a>
+  </div>
 </body>
 </html>
+
