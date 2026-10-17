@@ -1,170 +1,600 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dream of Strokes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream of Strokes | Official Collector Links</title>
+  <meta name="description" content="Explore original handcrafted canvas paintings, Arabic calligraphy, custom commissions, and private gallery collections by Dream of Strokes.">
+  <link rel="icon" href="images/logo/fevicon.png" type="image/png">
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
+    :root {
+      --bg-dark: #07080a;
+      --card-bg: rgba(255, 255, 255, 0.035);
+      --card-bg-hover: rgba(255, 255, 255, 0.075);
+      --card-border: rgba(255, 255, 255, 0.10);
+      --card-border-hover: rgba(255, 255, 255, 0.28);
+      --text-pure: #ffffff;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Outfit', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      height: 100vh;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+      color: var(--text-pure);
+      font-family: var(--font-sans);
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: #fff;
-      overflow: hidden;
-      background: linear-gradient(120deg, #0b0b15, #0f0f25);
+      justify-content: space-between;
+      padding: 40px 18px 28px;
+      overflow-x: hidden;
     }
 
-    /* Moving blue → pink gradient lights */
-    body::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: 
-        radial-gradient(circle at 25% 25%, rgba(0,150,255,0.3), transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255,20,147,0.3), transparent 50%),
-        radial-gradient(circle at 60% 30%, rgba(0,200,255,0.2), transparent 60%);
-      animation: moveGradient 18s infinite alternate ease-in-out;
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
       z-index: 0;
     }
 
-    @keyframes moveGradient {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(10%, -10%) scale(1.2); }
+    /* Main Container */
+    .bio-wrapper {
+      width: 100%;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
-    .container {
-      text-align: center;
-      z-index: 2;
-      position: relative;
-      padding: 50px 40px;
-      border-radius: 25px;
+    /* Top Action Bar (Share Button) */
+    .bio-top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+
+    .btn-share {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(25px);
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
-      animation: fadeIn 2s ease-out;
-    }
-
-    .brand {
-      font-size: 3.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, #00bfff, #ff1493);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1.2rem;
-      animation: glowText 3s infinite ease-in-out;
-    }
-
-    @keyframes glowText {
-      0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-      50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.4); }
-    }
-
-    .tagline {
-      font-size: 1.3rem;
-      font-weight: 300;
-      color: #d6d6d6;
-      margin-bottom: 2.5rem;
-      animation: fadeInUp 2s ease;
-    }
-
-    /* Modern glowing button */
-    .btn {
-      position: relative;
-      display: inline-block;
-      text-decoration: none;
-      padding: 15px 55px;
-      border-radius: 50px;
-      font-weight: 500;
-      font-size: 1rem;
-      color: #fff;
-      background: linear-gradient(90deg, #00bfff33, #ff149333);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-pure);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
       backdrop-filter: blur(10px);
-      transition: all 0.4s ease;
+    }
+
+    .btn-share:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Profile Header */
+    .bio-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .bio-avatar-wrap {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 16px;
+    }
+
+    .bio-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #0f1117;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .bio-avatar-wrap:hover .bio-avatar {
+      transform: scale(1.04);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .bio-verified-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: #ffffff;
+      color: #000000;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      border: 2px solid #07080a;
+    }
+
+    .bio-title {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .bio-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .bio-bio {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #cbd5e1;
+      max-width: 440px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* Links Stack */
+    .bio-links-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-bottom: 30px;
+    }
+
+    .bio-card-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      color: var(--text-pure);
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
       overflow: hidden;
     }
 
-    .btn::before {
-      content: "";
+    /* Subtle Light Shimmer on Hover */
+    .bio-card-link::after {
+      content: '';
       position: absolute;
       top: 0;
-      left: -75px;
-      width: 50px;
+      left: -100%;
+      width: 50%;
       height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-      transform: skewX(-20deg);
-      transition: 0.7s;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+      transition: left 0.6s ease;
     }
 
-    .btn:hover::before {
-      left: 125%;
+    .bio-card-link:hover::after {
+      left: 120%;
     }
 
-    .btn:hover {
-      background: linear-gradient(90deg, #00bfff55, #ff149355);
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
+    .bio-card-link:hover {
+      background: var(--card-bg-hover);
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+    /* Featured / Primary Card Style */
+    .bio-card-link.featured-card {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.22);
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(25px); }
-      to { opacity: 1; transform: translateY(0); }
+    .bio-card-link.featured-card:hover {
+      background: rgba(255, 255, 255, 0.11);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
-    /* Floating particles */
-    .particle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: white;
+    .bio-card-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .bio-card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #ffffff;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+
+    .bio-card-link:hover .bio-card-icon {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .bio-card-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .bio-card-title {
+      font-size: 0.94rem;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+    }
+
+    .bio-card-subtitle {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .bio-card-arrow {
+      color: var(--text-subtle);
+      font-size: 0.82rem;
+      transition: transform 0.25s ease, color 0.25s ease;
+      margin-left: 12px;
+    }
+
+    .bio-card-link:hover .bio-card-arrow {
+      color: #ffffff;
+      transform: translateX(4px);
+    }
+
+    /* Social Icons Row */
+    .bio-socials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .bio-social-btn {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      opacity: 0.15;
-      animation: floatParticle 12s infinite linear;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
     }
 
-    @keyframes floatParticle {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      50% { opacity: 0.5; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    .bio-social-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      transform: translateY(-3px);
     }
 
-    @media (max-width: 600px) {
-      .brand { font-size: 2.6rem; }
-      .tagline { font-size: 1.1rem; }
-      .btn { padding: 12px 40px; font-size: 0.95rem; }
+    /* Footer */
+    .bio-footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bio-footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .bio-footer a:hover {
+      color: #ffffff;
+    }
+
+    /* Toast Notification */
+    .bio-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: rgba(18, 20, 26, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 0.84rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+
+    .bio-toast.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 24px 14px 20px;
+      }
+      .bio-title {
+        font-size: 1.45rem;
+      }
+      .bio-card-link {
+        padding: 14px 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Floating glowing particles -->
-  <div class="particle" style="left: 15%; animation-delay: 0s;"></div>
-  <div class="particle" style="left: 35%; animation-delay: 2s;"></div>
-  <div class="particle" style="left: 55%; animation-delay: 4s;"></div>
-  <div class="particle" style="left: 75%; animation-delay: 6s;"></div>
 
-  <div class="container">
-    <h1 class="brand">Dream of Strokes</h1>
-    <p class="tagline">Where every brush tells a story.</p>
-    <a href="https://www.dreamofstrokes.com" class="btn">Enter the Gallery</a>
+  <!-- Ambient Glow -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Bio Link Card Container -->
+  <main class="bio-wrapper">
+    
+    <!-- Top Right Share Button -->
+    <div class="bio-top-bar">
+      <button type="button" class="btn-share" id="bio-share-btn" title="Share profile" aria-label="Share profile">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+      </button>
+    </div>
+
+    <!-- Header Section -->
+    <header class="bio-header">
+      <div class="bio-avatar-wrap">
+        <img src="images/logo/nav-crop.png" alt="Dream of Strokes" class="bio-avatar" onerror="this.src='images/logo/nav.png'">
+        <span class="bio-verified-badge" title="Verified Fine Art Studio">
+          <i class="fa-solid fa-check"></i>
+        </span>
+      </div>
+      <h1 class="bio-title">Dream of Strokes</h1>
+      <div class="bio-kicker">
+        <span>Handcrafted Fine Art</span>
+        <span>&bull;</span>
+        <span>Sialkot, Pakistan</span>
+      </div>
+      <p class="bio-bio">
+        Original oil on canvas paintings &amp; classical Arabic calligraphy handcrafted by Pakistani master artists. Direct artist studio concierge.
+      </p>
+    </header>
+
+    <!-- Links Stack -->
+    <section class="bio-links-group" aria-label="Official Links">
+      
+      <!-- 1. Main Online Art Gallery (Featured) -->
+      <a href="artwork.html" class="bio-card-link featured-card">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-solid fa-palette"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">Explore Art Gallery</span>
+            <span class="bio-card-subtitle">Browse all original canvas paintings</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <!-- 2. Arabic Calligraphy Collection -->
+      <a href="artwork.html?category=calligraphy" class="bio-card-link">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-solid fa-feather-pointed"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">Arabic Calligraphy Canvas</span>
+            <span class="bio-card-subtitle">Quranic verses &amp; classical Islamic scripts</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <!-- 3. Bespoke Commission Concierge (WhatsApp) -->
+      <a href="https://wa.me/923374515580?text=Hello%20Dream%20of%20Strokes,%20I%20would%20like%20to%20inquire%20about%20commissioning%20a%20custom%20artwork." target="_blank" rel="noopener noreferrer" class="bio-card-link">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">Commission a Bespoke Artwork</span>
+            <span class="bio-card-subtitle">Direct concierge with our resident artists</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <!-- 4. Official Main Website -->
+      <a href="index.html" class="bio-card-link">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">Official Website</span>
+            <span class="bio-card-subtitle">dreamofstrokes.com</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <!-- 5. Collector Circle / Sign In -->
+      <a href="login.html" class="bio-card-link">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-solid fa-gem"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">Collector Vault Login</span>
+            <span class="bio-card-subtitle">Track acquisitions &amp; certificates</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <!-- 6. The Strokes Journal / Blog -->
+      <a href="blog.html" class="bio-card-link">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">The Strokes Journal</span>
+            <span class="bio-card-subtitle">Collector guides &amp; studio stories</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+      <!-- 7. Contact Studio -->
+      <a href="contact.html" class="bio-card-link">
+        <div class="bio-card-left">
+          <div class="bio-card-icon">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="bio-card-texts">
+            <span class="bio-card-title">Studio &amp; Artist Contact</span>
+            <span class="bio-card-subtitle">Inquiries, partnerships &amp; visits</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right bio-card-arrow" aria-hidden="true"></i>
+      </a>
+
+    </section>
+
+    <!-- Social Media Links -->
+    <nav class="bio-socials" aria-label="Social Profiles">
+      <a href="https://instagram.com/dream_of_strokes" target="_blank" rel="noopener noreferrer" class="bio-social-btn" aria-label="Instagram" title="Follow us on Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/923374515580" target="_blank" rel="noopener noreferrer" class="bio-social-btn" aria-label="WhatsApp" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+      <a href="mailto:dreamofstrokes@gmail.com" class="bio-social-btn" aria-label="Email Studio" title="Send an Email">
+        <i class="fa-regular fa-envelope"></i>
+      </a>
+      <a href="https://facebook.com/dreamofstrokes" target="_blank" rel="noopener noreferrer" class="bio-social-btn" aria-label="Facebook" title="Facebook Page">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Clean Footer -->
+  <footer class="bio-footer">
+    <p>&copy; 2026 <a href="index.html">Dream of Strokes</a>. All rights reserved.</p>
+  </footer>
+
+  <!-- Toast Message -->
+  <div class="bio-toast" id="bio-toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-check"></i>
+    <span>Profile link copied to clipboard!</span>
   </div>
+
+  <script>
+    // Share / Copy Link Functionality
+    const shareBtn = document.getElementById('bio-share-btn');
+    const toast = document.getElementById('bio-toast');
+
+    function showToast(text) {
+      if (text) toast.querySelector('span').textContent = text;
+      toast.classList.add('is-active');
+      setTimeout(() => {
+        toast.classList.remove('is-active');
+      }, 2600);
+    }
+
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Dream of Strokes',
+              text: 'Original handcrafted paintings and Islamic Arabic calligraphy on canvas.',
+              url: window.location.href
+            });
+            return;
+          } catch (err) {
+            // User cancelled share or unsupported, fallback to clipboard
+          }
+        }
+
+        // Fallback: Copy URL to clipboard
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          showToast('Profile link copied to clipboard!');
+        } catch (e) {
+          showToast('Link ready to share!');
+        }
+      });
+    }
+  </script>
 </body>
 </html>
-
