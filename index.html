@@ -37,7 +37,7 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 55%),
         radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
       color: var(--text-pure);
       font-family: var(--font-sans);
@@ -50,12 +50,12 @@
       overflow-x: hidden;
     }
 
-    /* Subtle Ambient Lighting */
+    /* Ambient Lighting */
     .ambient-glow {
       position: fixed;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, transparent 70%);
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
       top: -160px;
       left: 50%;
       transform: translateX(-50%);
@@ -63,7 +63,7 @@
       z-index: 0;
     }
 
-    /* Main Card Wrapper */
+    /* Main Container */
     .bio-wrapper {
       width: 100%;
       max-width: 480px;
@@ -104,7 +104,7 @@
       transform: translateY(-2px);
     }
 
-    /* Profile Header with Live Clickable Logo */
+    /* Profile Header with Prominent Larger Live Logo */
     .bio-header {
       text-align: center;
       margin-bottom: 30px;
@@ -114,9 +114,10 @@
       display: inline-block;
       text-decoration: none;
       position: relative;
-      width: 104px;
-      height: 104px;
-      margin: 0 auto 16px;
+      /* Enlarged Logo Dimensions */
+      width: 124px;
+      height: 124px;
+      margin: 0 auto 18px;
       border-radius: 50%;
     }
 
@@ -125,40 +126,40 @@
       height: 100%;
       border-radius: 50%;
       object-fit: contain;
-      background: #0d0f15;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      padding: 8px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+      background: radial-gradient(circle, #141720 0%, #0a0b10 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.26);
+      padding: 10px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 255, 255, 0.03);
       transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
       display: block;
     }
 
     .bio-avatar-link:hover .bio-avatar {
       transform: scale(1.05);
-      border-color: rgba(255, 255, 255, 0.45);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.06);
     }
 
     .bio-verified-badge {
       position: absolute;
-      bottom: 4px;
-      right: 4px;
+      bottom: 5px;
+      right: 5px;
       background: #ffffff;
       color: #000000;
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
-      border: 2px solid #07080a;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      font-size: 0.78rem;
+      border: 2.5px solid #07080a;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
     }
 
     .bio-title {
       font-family: var(--font-serif);
-      font-size: 1.65rem;
+      font-size: 1.75rem;
       font-weight: 600;
       letter-spacing: 0.02em;
       margin-bottom: 6px;
@@ -169,7 +170,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.74rem;
+      font-size: 0.75rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -178,7 +179,7 @@
     }
 
     .bio-bio {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       line-height: 1.55;
       color: #cbd5e1;
       max-width: 420px;
@@ -361,8 +362,12 @@
       body {
         padding: 24px 14px 20px;
       }
+      .bio-avatar-link {
+        width: 110px;
+        height: 110px;
+      }
       .bio-title {
-        font-size: 1.45rem;
+        font-size: 1.55rem;
       }
       .bio-card-link {
         padding: 14px 16px;
@@ -385,12 +390,12 @@
       </button>
     </div>
 
-    <!-- Header Section with Live Clickable Logo -->
+    <!-- Header Section with Larger Live Clickable Logo -->
     <header class="bio-header">
       <a href="https://dreamofstrokes.com/" target="_blank" rel="noopener noreferrer" class="bio-avatar-link" title="Visit Dream of Strokes Official Website">
         <img 
           src="https://dreamofstrokes.com/images/logo/nav.png" 
-          alt="Dream of Strokes" 
+          alt="Dream of Strokes Logo" 
           class="bio-avatar"
           onerror="this.src='https://dreamofstrokes.com/images/logo/nav-crop.png'"
         >
